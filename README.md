@@ -1,24 +1,60 @@
-# README
+##テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+  usersテーブル
+|Column           |Type     |Options      |
+|-----------------|---------|-------------|
+| email           | string | null: false, unique: true |
+| encrypted_password        | string  | null: false|
+| nick_name       | string  | null: false |
+| first_name      | string  | null: false |
+| last_name       | string  | null: false |
+| first_name_rubi | string  | null: false |
+| last_name_rubi  | string  | null: false |
+| birthday        | date | null: false |
 
-Things you may want to cover:
 
-* Ruby version
+  Association
+  has_many : items
+  has_many : buys
 
-* System dependencies
+  itemsテーブル
+|Column        |Type     |Options      |
+|--------------|---------|-------------|
+| goods_name     | string  | null: false |
+| explanation  | text    | null: false |
+| category_id    | integer  | null: false |
+| status_id      | integer  | null: false |
+| burden_id      | integer  | null: false |
+| start_id       | integer  | null: false |
+| preparation_id | integer | null: false |
+| price        | integer | null: false |
+| user         | references | foreign_key: true |
 
-* Configuration
+  Association
+  belongs_to : user
+  has_one : buy
 
-* Database creation
+  buysテーブル
+|Column       |Type     |Options      |
+|-------------|---------|-------------|
+| user        | references | foreign_key: true |
+| item        | references | foreign_key: true |
 
-* Database initialization
+  Association
+  belongs_to : user
+  belongs_to : item
+  has_one : address
 
-* How to run the test suite
+  addressテーブル
+|Column         |Type     |Options      |
+|---------------|---------|-------------|
+| postal_code   | string | null: false |
+| start_id    | integer  | null: false |
+| city          | string  | null: false |
+| house_number  | string  | null: false |
+| building_name | string  |             |
+| tel           | string  | null: false |
+| buy           | references | foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  Association
+  belongs_to : buy
