@@ -4,58 +4,57 @@
 |Column           |Type     |Options      |
 |-----------------|---------|-------------|
 | email           | string  | unique: true |
-| password        | string  | null: false |
+| encrypted_password        | string  | null: false |
 | nick_name       | string  | null: false |
 | first_name      | string  | null: false |
 | last_name       | string  | null: false |
 | first_name_rubi | string  | null: false |
 | last_name_rubi  | string  | null: false |
-| year            | integer | null: false |
-| month           | integer | null: false |
-| day             | integer | null: false |
+| birthday        | integer | null: false |
+
 
   Association
-  has_many : itemsテーブル
-  has_many : buyテーブル
+  has_many : items
+  has_many : buys
 
   itemsテーブル
 |Column        |Type     |Options      |
 |--------------|---------|-------------|
-| goods        | string  | null: false |
+| goods_name     | string  | null: false |
 | explanation  | text    | null: false |
-| category     | string  | null: false |
-| status       | string  | null: false |
-| burden       | string  | null: false |
-| start        | string  | null: false |
-| Preparation  | integer | null: false |
+| category_id    | integer  | null: false |
+| status_id      | integer  | null: false |
+| burden_id      | integer  | null: false |
+| start_id       | integer  | null: false |
+| Preparation_id | integer | null: false |
 | price        | integer | null: false |
 | user         | references | foreign_key: true |
 
   Association
-  belongs_to : usersテーブル
-  belongs_to : duyテーブル
+  belongs_to : user
+  belongs_to : duy
 
-  buyテーブル
+  buysテーブル
 |Column       |Type     |Options      |
 |-------------|---------|-------------|
 | user        | references | foreign_key: true |
 | item        | references | foreign_key: true |
 
   Association
-  belongs_to : usersテーブル
-  has_one : itemsテーブル
-  belongs_to : buyテーブル
+  belongs_to : users
+  has_one : items
+  has_one : address
 
   addressテーブル
 |Column         |Type     |Options      |
 |---------------|---------|-------------|
-| postal_code   | integer | null: false |
-| prefecture    | string  | null: false |
+| postal_code   | string | null: false |
+| prefecture_id    | integer  | null: false |
 | city          | string  | null: false |
 | house_number  | string  | null: false |
-| building_name | string  | null: false |
+| building_name | string  |             |
 | tel           | string  | null: false |
 | buy           | references | foreign_key: true |
 
   Association
-  has_one : buyテーブル
+  belongs_to : buy
