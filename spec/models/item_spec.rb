@@ -9,7 +9,7 @@ RSpec.describe Item, type: :model do
 
     context '登録できるとき' do
 
-      it 'goods_name,explanation,category_id,status_id,burden_id,start_id,preparation_id,priceがあれば登録できる' do
+      it 'すべての情報が正常であれば登録できること' do
       expect(@item).to be_valid
       end
       it 'priceが半角数字なら登録できる' do
@@ -107,6 +107,22 @@ RSpec.describe Item, type: :model do
       @item.price = 10000000
       @item.valid?
       expect(@item.errors.full_messages).to include("Price must be less than 10000000")
+      end
+
+      it 'priceが全角数字」では登録できない' do
+      @item.price = "３００"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+      it 'priceが半角英数混合では登録できない' do
+      @item.price = "a11111"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+      it 'priceが2半角英語では登録できない' do
+      @item.price = "aaaaa"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price is not a number")
       end
     end
   end

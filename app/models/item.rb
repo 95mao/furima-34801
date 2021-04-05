@@ -21,4 +21,6 @@ class Item < ApplicationRecord
   belongs_to :burden
   belongs_to :start
   belongs_to :preparation
+
+  belongs_to :user
 end
