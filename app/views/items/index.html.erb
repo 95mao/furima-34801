@@ -145,7 +145,7 @@
             <%= item.goods_name %>
           </h3>
           <div class='item-price'>
-            <span><%= item.price %>円<br><%= item.burden_id %></span>
+            <span><%= item.price %>円<br><%= item.burden.name %></span>
             <div class='star-btn'>
               <%= image_tag "star.png", class:"star-icon" %>
               <span class='star-count'>0</span>
@@ -175,8 +175,8 @@
           </div>
         </div>
         <% end %>
-        <% end %>
       </li>
+      <% end %>
       <%# //商品がある場合は表示されないようにしましょう %>
       <%# //商品がない場合は以下のダミー商品が表示されるようにしましょう %>
     </ul>
@@ -188,10 +188,3 @@
   <%= image_tag 'icon_camera.png' , size: '185x50' ,class: "purchase-btn-icon" %>
 <% end %>
 <%= render "shared/footer" %>
-
-  <% @items.each do |item| %>
-    <%= item.image %>
-    <%= item.price %>
-    <%= item.goods_name %>
-    <%= item.burden_id %>
-  <% end %>

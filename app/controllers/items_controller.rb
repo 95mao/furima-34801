@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # 全てのアクションの前に、ユーザーがログインしているかどうか確認する！ただし、showアクションと、indexアクションが呼び出された場合は、除くよ
 
   def index
-    @items = Item.all
+    @items = Item.all.order("created_at DESC")  # Itemのデータを全て取得・order("created_at DESC")で降順に
   end
   
   def new
