@@ -22,6 +22,20 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])  # DBから編集したいレコードを取得
+    @item.update(item_params)  # 取得したレコードに対してupdateメソッドを使って更新
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
+    end
+  end
+
   private
   def item_params
     params.require(:item).permit(:image, :goods_name, :explanation, :category_id, :status_id, :burden_id, :start_id, :preparation_id, :price).merge(user_id: current_user.id)
