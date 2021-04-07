@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # 全てのアクションの前に、ユーザーがログインしているかどうか確認する！ただし、showアクションと、indexアクションが呼び出された場合は、除くよ
-  before_action :set_item, only: [:show, :edit, :update]  # show edit update へアクセスがあった場合に 「 move_to_index 」 の前にprivateへいく
+  before_action :set_item, only: [:show, :edit, :update, :destroy]  # show edit update destroy へ、アクセスがあった場合に 「 move_to_index 」 の前にprivateへいく
   before_action :move_to_index, only: [:edit, :update, :destroy]  # edit update destroy にアクセスがある場合先にprivateにいくようにする
 
   def index
@@ -29,12 +29,21 @@ class ItemsController < ApplicationController
   end
 
   def update
-    # @item = Item.find(params[:id])   DBから編集したいレコードを取得・・@itemはbefore_actionで定義された
+    # @item = Item.find(params[:id])   DBから編集したいレコードを取得・・before_action :set_item で定義された
     @item.update(item_params)  # 取得したレコードに対してupdateメソッドを使って更新
     if @item.save
       redirect_to root_path
     else
       render :new
+    end
+  end
+
+  def destroy
+    # @item = Item.find(params[:id])   DBから削除したいレコードを取得・・before_action :set_item で定義された
+    if @item.destroy  # 取得したレコードに対してdestroyメソッドを使って削除 & 削除の処理後はトップページへ
+      redirect_to root_path
+    else
+      redirect_to root_path
     end
   end
 
