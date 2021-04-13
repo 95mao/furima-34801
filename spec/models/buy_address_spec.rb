@@ -74,6 +74,12 @@ RSpec.describe BuyAddress, type: :model do  # RSpec.describe 「 factorybotの�
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include("Token can't be blank")
       end
+
+      it 'telが数字でないと登録できない' do
+        @buy_address.tel = 'a0901234567'
+        @buy_address.valid?
+        expect(@buy_address.errors.full_messages).to include("Tel is invalid")
+      end
     end
 
   end

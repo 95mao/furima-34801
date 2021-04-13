@@ -11,7 +11,8 @@ class BuyAddress
     validates :start_id, numericality: { other_than: 0 }
     validates :city
     validates :house_number
-    validates :tel, length: { maximum: 11 } # numericality: { :only_integer}
+    validates :tel, length: { maximum: 11 }, format: {with: /\A[0-9]+\z/}  # /\A[0-9]+\z/の＋は２回以上の繰り返しって意味
+    # validates :tel, format: {with: /\A[0-9]{11}\z/}  0~9の11桁って記述、こちらでも大丈夫だった
 
     validates :token, presence: true
   end
