@@ -26,6 +26,9 @@ class ItemsController < ApplicationController
 
   def edit
     # @item = Item.find(params[:id])  before_action :set_item で定義
+    unless @item.buy == nil  # 購入履歴が空でなけれは
+      redirect_to root_path
+    end
   end
 
   def update
