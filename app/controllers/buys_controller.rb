@@ -1,9 +1,10 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!  # ログインしているかの確認（していなければログインページへ遷移する）
+  before_action :set_item, only: [:index, :create]
 
   def index
     @buy_address = BuyAddress.new
-    @item = Item.find(params[:item_id])  # paramsの中身の確認は、binding.pry→params か rails routes のURI Patternで確認
+    # @item = Item.find(params[:item_id])  before_actionで生成
 
     # 出品者ならトップページへ遷移する または @itemのbuy にデータがある（売れてる）ならトップページへ
     if current_user == @item.user || @item.buy != nil
@@ -13,7 +14,8 @@ class BuysController < ApplicationController
 
   def create
     @buy_address = BuyAddress.new(params_buy_address)
-    @item = Item.find(params[:item_id])
+    # @item = Item.find(params[:item_id])  before_actionで生成
+
     if @buy_address.valid?  # valid? は作られたクラスのバリデーションをかけて真偽を判断する（BuyAddressクラスから作られているのでbuy_addressのバリデーション）
       pay_buy_address
       @buy_address.save
@@ -36,6 +38,11 @@ class BuysController < ApplicationController
       card: @buy_address.token,    # カードトークン
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id]) 
+    # paramsの中身の確認は、binding.pry→params か rails routes のURI Patternで確認
   end
 
 end
