@@ -3,7 +3,6 @@ const pay = () => {
   const form = document.getElementById("charge-form");  // document.getElementById("id名")でHTMLで定義したidを取得できる
   form.addEventListener("submit", (e) => {  // addEventListener（イベント名,関数）はイベント発火の定義
     e.preventDefault();  // event.preventDefaultは、submitイベントの発生元であるフォームが持つデフォルトの動作をキャンセルするメソッド(一旦送信を止めている)
-    console.log("フォーム送信時にイベント発火")
 
     // payjpへ送るデータの準備
     const formResult = document.getElementById("charge-form");
@@ -19,7 +18,6 @@ const pay = () => {
 
     // カード情報のトークン化(HTML用へ変換)
     Payjp.createToken(card, (status, response) => {  // Payjp.createToken(カード情報, トークンが送付された後に実行する処理 )
-      console.log(status)
       if (status == 200) {  // HTTPステータスコード (200~299 送信成功 )
         const token = response.id;  // response.idとすることでトークンの値を取得することができ
 
