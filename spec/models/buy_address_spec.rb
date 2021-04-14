@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe BuyAddress, type: :model do  # RSpec.describe 「 factorybotのクラス名 」, type: :model
   before do
-    @buy_address = FactoryBot.build(:buy_address)  # ()の中はfactorybotのクラスで決めたfactoryのこと（２行目））
+    item = FactoryBot.create(:item)
+    user = FactoryBot.create(:user)  # FactoryBotで作ったitemとuserのデータを@buy_addressで紐付けするため
+    @buy_address = FactoryBot.build(:buy_address, user_id: user.id, item_id: item.id)  # ()の中はfactorybotのクラスで決めたfactoryのこと（２行目））
+    sleep(1)  # sleep(秒数) ()中の時間をかけて処理をしてくれる
   end
 
   describe "購入情報登録" do
@@ -86,11 +89,7 @@ RSpec.describe BuyAddress, type: :model do  # RSpec.describe 「 factorybotの�
         expect(@buy_address.errors.full_messages).to include("Tel is invalid")
       end
 
-      it 'postal_codeが-なしでは登録できない' do
-        @buy_address.postal_code = '1234567'
-        @buy_address.valid?
-        expect(@buy_address.errors.full_messages).to include("Postal code is invalid")
-      end
+
     end
 
   end
