@@ -1,20 +1,25 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!  # ログインしているかの確認（していなければログインページへ遷移する）
   before_action :set_item, only: [:index, :create]
+  before_action :if_item, only: [:index, :create]
 
   def index
     @buy_address = BuyAddress.new
     # @item = Item.find(params[:item_id])  before_actionで生成
 
+    if_item
     # 出品者ならトップページへ遷移する または @itemのbuy にデータがある（売れてる）ならトップページへ
-    if current_user == @item.user || @item.buy != nil
-      redirect_to root_path
-    end
+    # if current_user == @item.user || @item.buy != nil
+    #   redirect_to root_path
+    # end
+    
   end
 
   def create
     @buy_address = BuyAddress.new(params_buy_address)
     # @item = Item.find(params[:item_id])  before_actionで生成
+
+    if_item
 
     if @buy_address.valid?  # valid? は作られたクラスのバリデーションをかけて真偽を判断する（BuyAddressクラスから作られているのでbuy_addressのバリデーション）
       pay_buy_address
@@ -43,6 +48,13 @@ class BuysController < ApplicationController
   def set_item
     @item = Item.find(params[:item_id]) 
     # paramsの中身の確認は、binding.pry→params か rails routes のURI Patternで確認
+  end
+
+  # 出品者ならトップページへ遷移する または @itemのbuy にデータがある（売れてる）ならトップページへ
+  def if_item  
+    if current_user == @item.user || @item.buy != nil
+      redirect_to root_path
+    end
   end
 
 end
