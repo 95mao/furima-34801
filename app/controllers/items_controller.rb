@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index  # ログイン者が出品者でない または 購入履歴が空でなけれは トップページへ
-    unless current_user == @item.user || @item.buy == nil  # unless はこの条件でない時以下の処理を行うというメソッド（ifの逆）
+    if current_user != @item.user || @item.buy == nil  # unless はこの条件でない時以下の処理を行うというメソッド（ifの逆）
       redirect_to root_path
     end
   end

@@ -13,6 +13,11 @@ RSpec.describe BuyAddress, type: :model do  # RSpec.describe 「 factorybotの�
       expect(@buy_address).to be_valid
       end
 
+      it '建物名が空でも登録できる'do
+      @buy_address.building_name = ''
+      expect(@buy_address).to be_valid
+      end
+
     end
 
     context '登録できないとき' do
@@ -79,6 +84,12 @@ RSpec.describe BuyAddress, type: :model do  # RSpec.describe 「 factorybotの�
         @buy_address.tel = 'a0901234567'
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include("Tel is invalid")
+      end
+
+      it 'postal_codeが-なしでは登録できない' do
+        @buy_address.postal_code = '1234567'
+        @buy_address.valid?
+        expect(@buy_address.errors.full_messages).to include("Postal code is invalid")
       end
     end
 
