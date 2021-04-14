@@ -26,6 +26,10 @@ class ItemsController < ApplicationController
 
   def edit
     # @item = Item.find(params[:id])  before_action :set_item で定義
+
+    # unless @item.buy == nil  move_to_indexで定義
+    #   redirect_to root_path
+    # end
   end
 
   def update
@@ -57,8 +61,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def move_to_index  # ログイン者が出品者でない時の処理
-    unless current_user == @item.user  # unless はこの条件でない時以下の処理を行うというメソッド（ifの逆）
+  def move_to_index  # ログイン者が出品者でない または 購入履歴が空でなけれは トップページへ
+    if current_user != @item.user || @item.buy != nil  # unless はこの条件でない時以下の処理を行うというメソッド（ifの逆）
       redirect_to root_path
     end
   end
